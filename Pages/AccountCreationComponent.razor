@@ -1,0 +1,64 @@
+﻿@page "/accountCreation"
+@using testRedisBloom.Data
+@using Blazored.FluentValidation
+@using BCrypt.Net
+@using StackExchange.Redis
+@inject IConnectionMultiplexer _mux
+@inject NavigationManager _navigationManager
+
+
+<h1>Create Account</h1>
+
+<EditForm Model="_form" OnValidSubmit="Submit">
+    <FluentValidationValidator />
+    <DataAnnotationsValidator/>
+    <div class="form-group row">
+        <label for="email" class="col-md-2 col-form-label">Email:</label>
+        <div class="col-md-10">
+            <InputText id="email" @bind-Value="_form.Email"/>
+            <ValidationMessage For="@(() => _form.Email)"></ValidationMessage>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="username" class="col-md-2 col-form-label">UserName:</label>
+        <div class="col-md-10">
+            <InputText id="username" @bind-Value="_form.Username"/>
+            <ValidationMessage For="@(() => _form.Username)"></ValidationMessage>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="password" class="col-md-2 col-form-label">Password:</label>
+        <div class="col-md-10">
+            <InputText id="password" @bind-Value="_form.Password"/>
+            <ValidationMessage For="@(() => _form.Password)"></ValidationMessage>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private CreateUserForm _form = new();
+
+    public async Task Submit()
+    {
+        var db = _mux.GetDatabase();
+        var t1 = db.ExecuteAsync ("BF.ADD", "username-filter", _form.Username);
+        var t2 = db.ExecuteAsync("BF.ADD", "email-filter", _form.Email);
+        var t3 = db.HashSetAsync($"Users:{_form.Email}", new HashEntry[]
+        {
+            new ("Email", _form.Email),
+            new ("Password", BCrypt.HashPassword(_form.Password)),
+            new ("Username", _form.Username)
+        
+        });
+        await Task.WhenAll(t1, t2, t3);
+        _form = new CreateUserForm();
+        _navigationManager.NavigateTo("/");
+    }
+}

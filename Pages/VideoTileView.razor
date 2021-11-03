@@ -1,0 +1,25 @@
+﻿@using StackExchange.Redis
+@using Microsoft.Extensions.Configuration
+@using System.Text
+@using Newtonsoft.Json.Linq
+@using System.Net.Http.Json
+@using testRedisBloom.Data
+@inject HttpClient _client
+@inject IConnectionMultiplexer _mux
+@inject IConfiguration _config
+@inject VideoService _videoService
+
+@foreach (var tile in _tiles)
+{
+    <VideoTile Data="@tile"/>
+    <br/>
+}
+
+@code {
+    private List<VideoData> _tiles = new();
+    protected override async Task OnInitializedAsync()
+    {
+        _tiles = (await _videoService.GetVideoData()).ToList();
+    }
+
+}

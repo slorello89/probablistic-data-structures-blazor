@@ -1,0 +1,16 @@
+﻿@using testRedisBloom.Data
+@inject NavigationManager _navigationManager
+<img @onclick="GoToVideo" src="@Data.Thumbnail"/>
+<br/>
+<a @onclick="GoToVideo">@Data.Title.Substring(0,20) </a>
+<br/>
+Total Views: @Data.TotalViews Unique Views: @Data.UniqueViews
+@code {
+    [Parameter]
+    public VideoData Data { get; set; }
+
+    public void GoToVideo()
+    {
+        _navigationManager.NavigateTo($"/video/{Data.Id}");
+    }
+}

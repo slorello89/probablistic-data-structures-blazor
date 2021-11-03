@@ -1,0 +1,64 @@
+﻿@using testRedisBloom.Data
+@using BCrypt.Net
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _authProvider
+@inject StackExchange.Redis.IConnectionMultiplexer _mux
+
+<EditForm Model="_form" OnValidSubmit="SignIn" xmlns="http://www.w3.org/1999/html">
+    <DataAnnotationsValidator/>
+    <label for="email" class="col-md-2 col-form-label">Email:</label>
+    <div class="col-md-10">
+        <InputText id="email" @bind-Value="_form.Email"/>
+        <ValidationMessage For="@(()=> _form.Email)"></ValidationMessage>
+    </div>
+    
+    <label for="password" class="col-md-2 col-form-label">Password:</label>
+    <div class="col-md-10">
+        <InputText type="password" id="password" @bind-Value="_form.Password"/>
+        <ValidationMessage For="@(()=> _form.Password)"></ValidationMessage>
+    </div>
+    @if (!string.IsNullOrEmpty(_errorMessage))
+    {
+        <p class="alert-danger">@_errorMessage</p>
+    }
+    <br/>
+    <div class="row">
+        <div class="text-right col-md-1">
+            <button type="submit" class="btn btn-success btn-group-sm">Login</button>
+            
+        </div>
+    </div>
+    
+</EditForm>
+<div class="row">
+    <a @onclick="CreateAccount" class="btn btn-group-sm col-md-1">Create Account</a>
+</div>
+
+@code {
+    private LoginForm _form = new LoginForm();
+    private string _errorMessage;
+    public async Task SignIn()
+    {
+        var db = _mux.GetDatabase();
+        var hash = await db.HashGetAllAsync($"Users:{_form.Email}");
+        if (hash.Any())
+        {
+            if (BCrypt.Verify(_form.Password, hash.First(x => x.Name == "Password").Value))
+            {
+                ((AuthProvider) _authProvider).AuthorizeUser(new User {Email = hash.First(x => x.Name == "Email").Value, Username = hash.First(x => x.Name == "Password").Value});
+                _navigationManager.NavigateTo("/");
+            }
+        }
+        else
+        {
+            _errorMessage = "Email or Password was invalid";
+        }
+        
+    }
+
+    public void CreateAccount()
+    {
+        _navigationManager.NavigateTo("/accountCreation");
+    }
+    
+}

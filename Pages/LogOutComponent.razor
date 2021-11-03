@@ -1,0 +1,10 @@
+﻿@inject AuthenticationStateProvider _provider
+@inject NavigationManager _manager
+<button @onclick="Logout">Log Out</button>
+@code {
+    private void Logout()
+    {
+        ((AuthProvider) _provider).LogOutUser();
+        _manager.NavigateTo("/");
+    }
+}

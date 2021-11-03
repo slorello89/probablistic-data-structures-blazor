@@ -1,0 +1,32 @@
+﻿@page "/video/{Id}"
+@using testRedisBloom.Data
+@using System.Security.Claims
+@inject StackExchange.Redis.IConnectionMultiplexer _mux
+@inject VideoService _videoService
+@inject AuthenticationStateProvider _provider
+<iframe width="320" height="180" src=@Uri title="YouTube video player" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+<p>
+    @_data.Title
+</p>
+<p>
+    Total Views: @_data.TotalViews Unique View: @_data.UniqueViews
+</p>
+<LogOutComponent/>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private VideoData _data = new();
+
+    public string Uri => $"https://www.youtube.com/embed/{Id}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var db = _mux.GetDatabase();
+        await db.ScriptEvaluateAsync(Scripts.IncrCms, new {KeyName = "total-view-sketch", Item = Id});
+        var user = (await _provider.GetAuthenticationStateAsync()).User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+        db.HyperLogLogAdd($"hll:{Id}", user);
+        _data = await _videoService.GetData(Id);
+        StateHasChanged();
+    }
+
+}
