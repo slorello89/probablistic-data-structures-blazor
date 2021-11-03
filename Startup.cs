@@ -14,11 +14,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RedisBloomBlazor.Data;
+using RedisBloomBlazor.Validators;
 using StackExchange.Redis;
-using testRedisBloom.Data;
-using testRedisBloom.Validators;
 
-namespace testRedisBloom
+namespace RedisBloomBlazor
 {
     public class Startup
     {

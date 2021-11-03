@@ -1,4 +1,4 @@
-﻿namespace testRedisBloom.Data
+﻿namespace RedisBloomBlazor.Data
 {
     public class VideoData
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using testRedisBloom.Validators;
+using RedisBloomBlazor.Validators;
 
-namespace testRedisBloom.Data
+namespace RedisBloomBlazor.Data
 {
     public class CreateUserForm
     {

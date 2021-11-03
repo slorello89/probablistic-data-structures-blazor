@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace testRedisBloom
+namespace RedisBloomBlazor
 {
     public static class Scripts
     {

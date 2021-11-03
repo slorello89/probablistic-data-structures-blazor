@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace testRedisBloom.Data
+namespace RedisBloomBlazor.Data
 {
     public class WeatherForecastService
     {

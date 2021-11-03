@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
-using testRedisBloom.Data;
+using RedisBloomBlazor.Data;
 
-namespace testRedisBloom
+namespace RedisBloomBlazor
 {
     public class AuthProvider :AuthenticationStateProvider
     {

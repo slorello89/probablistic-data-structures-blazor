@@ -1,6 +1,6 @@
 using System;
 
-namespace testRedisBloom.Data
+namespace RedisBloomBlazor.Data
 {
     public class WeatherForecast
     {

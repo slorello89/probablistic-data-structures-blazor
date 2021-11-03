@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 
-namespace testRedisBloom.Data
+namespace RedisBloomBlazor.Data
 {
     public class VideoService
     {

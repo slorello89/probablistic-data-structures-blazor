@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace testRedisBloom.Data
+namespace RedisBloomBlazor.Data
 {
     public class LoginForm
     {

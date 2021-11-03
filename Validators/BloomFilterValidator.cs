@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FluentValidation;
+using RedisBloomBlazor.Data;
 using StackExchange.Redis;
-using testRedisBloom.Data;
 
-namespace testRedisBloom.Validators
+namespace RedisBloomBlazor.Validators
 {
     public class BloomFilterValidator : AbstractValidator<CreateUserForm>
     {
