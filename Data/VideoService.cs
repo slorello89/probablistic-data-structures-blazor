@@ -24,7 +24,7 @@ namespace RedisBloomBlazor.Data
 
         public async Task<IEnumerable<VideoData>> GetVideoData(int offset = 0)
         {
-            var videoIds = _db.ListRange("videos", offset, 5);
+            var videoIds = _db.ListRange("videos", offset, offset+8);
             var missedIds = new List<string>();
             var res = new List<VideoData>();
             foreach (string id in videoIds)

@@ -1,9 +1,12 @@
 ﻿@using RedisBloomBlazor.Data
 @inject NavigationManager _navigationManager
-<img @onclick="GoToVideo" src="@Data.Thumbnail"/>
-<br/>
-<a @onclick="GoToVideo">@Data.Title.Substring(0,20) </a>
-<br/>
+<div>
+    <img @onclick="GoToVideo" src="@Data.Thumbnail"/>
+    <br/>
+    <a @onclick="GoToVideo">@Data.Title.Substring(0, 30)</a>
+    <br/>
+</div>
+
 Total Views: @Data.TotalViews Unique Views: @Data.UniqueViews
 @code {
     [Parameter]

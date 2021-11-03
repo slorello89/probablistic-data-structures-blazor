@@ -8,7 +8,7 @@
     <DataAnnotationsValidator/>
     <label for="email" class="col-md-2 col-form-label">Email:</label>
     <div class="col-md-10">
-        <InputText id="email" @bind-Value="_form.Email"/>
+        <InputText type="email" id="email" @bind-Value="_form.Email"/>
         <ValidationMessage For="@(()=> _form.Email)"></ValidationMessage>
     </div>
     

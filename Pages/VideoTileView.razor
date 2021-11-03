@@ -9,11 +9,18 @@
 @inject IConfiguration _config
 @inject VideoService _videoService
 
-@foreach (var tile in _tiles)
+<table>
+@for( var i = 0; i < _tiles.Count; i+=3)
 {
-    <VideoTile Data="@tile"/>
-    <br/>
-}
+    <tr>
+        @for (var j = i; j < _tiles.Count && j < i + 3; j++)
+        {
+            <td><VideoTile Data="@_tiles[j]"/></td>
+        }
+    </tr>
+}    
+</table>
+
 
 @code {
     private List<VideoData> _tiles = new();

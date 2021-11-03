@@ -15,7 +15,7 @@
     <div class="form-group row">
         <label for="email" class="col-md-2 col-form-label">Email:</label>
         <div class="col-md-10">
-            <InputText id="email" @bind-Value="_form.Email"/>
+            <InputText type="email" id="email" @bind-Value="_form.Email"/>
             <ValidationMessage For="@(() => _form.Email)"></ValidationMessage>
         </div>
     </div>
@@ -30,7 +30,7 @@
     <div class="form-group row">
         <label for="password" class="col-md-2 col-form-label">Password:</label>
         <div class="col-md-10">
-            <InputText id="password" @bind-Value="_form.Password"/>
+            <InputText type="password" id="password" @bind-Value="_form.Password"/>
             <ValidationMessage For="@(() => _form.Password)"></ValidationMessage>
         </div>
     </div>
