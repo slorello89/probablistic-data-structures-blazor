@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 
 namespace RedisBloomBlazor
 {
@@ -13,7 +14,11 @@ namespace RedisBloomBlazor
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            var mux = (IConnectionMultiplexer)host.Services.GetService(typeof(IConnectionMultiplexer));
+            var db = mux.GetDatabase();
+            db.ScriptEvaluate(Scripts.InitCms, new {KeyName = "total-view-sketch"});
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
