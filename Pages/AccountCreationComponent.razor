@@ -48,8 +48,7 @@
     public async Task Submit()
     {
         var db = _mux.GetDatabase();
-        var t1 = db.ExecuteAsync ("BF.ADD", "username-filter", _form.Username);
-        var t2 = db.ExecuteAsync("BF.ADD", "email-filter", _form.Email);
+        
         var t3 = db.HashSetAsync($"Users:{_form.Email}", new HashEntry[]
         {
             new ("Email", _form.Email),
@@ -57,7 +56,8 @@
             new ("Username", _form.Username)
         
         });
-        await Task.WhenAll(t1, t2, t3);
+        //TODO BF.ADD username and email
+        await Task.WhenAll(t3);
         _form = new CreateUserForm();
         _navigationManager.NavigateTo("/");
     }

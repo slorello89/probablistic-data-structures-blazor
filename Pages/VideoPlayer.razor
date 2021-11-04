@@ -22,10 +22,9 @@
     protected override async Task OnInitializedAsync()
     {
         var db = _mux.GetDatabase();
-        await db.ExecuteAsync("CMS.INCRBY", "total-view-sketch", Id, 1);
-        // await db.ScriptEvaluateAsync(Scripts.IncrCms, new {KeyName = "total-view-sketch", Item = Id});
+        //TODO CMS.INCRBY 
         var user = (await _provider.GetAuthenticationStateAsync()).User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
-        db.HyperLogLogAdd($"hll:{Id}", user);
+        //TODO HLL Add
         _data = await _videoService.GetData(Id);
         StateHasChanged();
     }
