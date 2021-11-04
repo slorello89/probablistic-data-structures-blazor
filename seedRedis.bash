@@ -1,2 +1,2 @@
 redis-cli del videos
-redis-cli lpush videos XqZsoesa55w e_04ZrNroTo npjF032TDDQ Q3vH8TjBkTg astISOttCQ0 1UdI_eoDPKQ 5twGmn-uInU iEKLFS-aKcw yss0SGzrUIY
+redis-cli RPUSH videos XqZsoesa55w kJQP7kiw5Fk JGwWNGJdvx8 RgKAFK5djSk OPf0YbXqDm0 9bZkp7q19f0 09R8_2nJtjg fRh_vgS2dFE hT_nvWreIhg
