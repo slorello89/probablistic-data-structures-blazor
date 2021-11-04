@@ -38,7 +38,8 @@ namespace RedisBloomBlazor.Data
                         Thumbnail = hash.First(x=>x.Name == "Thumbnail").Value,
                         Title = hash.First(x=>x.Name == "Title").Value,
                         UniqueViews =  (int)await _db.HyperLogLogLengthAsync($"hll:{id}"),
-                        TotalViews = (int)await _db.ScriptEvaluateAsync(Scripts.QueryCms, new {KeyName="total-view-sketch", Item=id})
+                        TotalViews = (int)await _db.ExecuteAsync("CMS.QUERY", "total-view-sketch", id)
+                        // TotalViews = (int)await _db.ScriptEvaluateAsync(Scripts.QueryCms, new {KeyName="total-view-sketch", Item=id})
                     });
                 }
                 else
@@ -92,8 +93,7 @@ namespace RedisBloomBlazor.Data
                 Thumbnail = hash.First(x => x.Name == "Thumbnail").Value,
                 Title = hash.First(x => x.Name == "Title").Value,
                 UniqueViews = (int) await _db.HyperLogLogLengthAsync($"hll:{id}"),
-                TotalViews = (int) await _db.ScriptEvaluateAsync(Scripts.QueryCms,
-                    new {KeyName = "total-view-sketch", Item = id})
+                TotalViews = (int)await _db.ExecuteAsync("CMS.QUERY", "total-view-sketch", id)
             };
         }
     }
