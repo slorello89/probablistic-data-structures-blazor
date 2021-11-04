@@ -12,11 +12,13 @@ namespace RedisBloomBlazor.Validators
             var db = mux.GetDatabase();
             RuleFor(x => x.Email).MustAsync(async (email, cancellation) =>
             {
+                //TODO Add Email presence validation
                 return true;
             }).WithMessage("Email in use");
 
             RuleFor(x => x.Username).MustAsync(async (username, cancellation) =>
             {
+                //TODO Add Username presence validation
                 return true;
             }).WithMessage("username in use");
         }
